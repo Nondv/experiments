@@ -5,6 +5,8 @@ require_relative 'integer_number/add'
 class IntegerNumber
   include Util::TypeChecking
 
+  attr_reader :value
+
   def initialize(natural_number, is_negative = false)
     check_type(natural_number, NaturalNumber)
 
@@ -46,21 +48,7 @@ class IntegerNumber
   def +(other)
     check_type(other)
 
-    return IntegerNumber.new(value + other.value, negative?) if negative? == other.negative?
-
-    if negative?
-      if value > other.value
-        IntegerNumber.new(value - other.value, true)
-      else
-        IntegerNumber.new(other.value - value)
-      end
-    else
-      if value > other.value
-        IntegerNumber.new(value - other.value)
-      else
-        IntegerNumber.new(other.value - value, true)
-      end
-    end
+    Add.call(self, other)
   end
 
   def -@
@@ -92,8 +80,4 @@ class IntegerNumber
   def inspect
     "IntegerNumber<#{'-' if negative?}#{value}>"
   end
-
-  protected
-
-  attr_reader :value
 end
