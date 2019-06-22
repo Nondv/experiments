@@ -60,5 +60,13 @@ RSpec.describe IntegerNumber do
       expect(one == minus_one).to be false
       expect(minus_one == minus_one).to be true
     end
+
+    it '#<' do
+      two = one + one
+      expect(one < two).to be true
+      expect(two < one).to be false
+      expect(one < one).to be false
+      expect(two < two).to be false
+    end
   end
 end

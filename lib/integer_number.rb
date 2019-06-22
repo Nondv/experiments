@@ -1,6 +1,8 @@
 require_relative 'natural_number'
 require_relative 'util/type_checking'
 require_relative 'integer_number/add'
+require_relative 'integer_number/less_than'
+require_relative 'integer_number/is_equal'
 
 class IntegerNumber
   include Util::TypeChecking
@@ -20,17 +22,13 @@ class IntegerNumber
   def ==(other)
     check_type(other)
 
-    negative? == other.negative? && value == other.value
+    IsEqual.call(self, other)
   end
 
   def <(other)
     check_type(other)
 
-    if negative?
-      other.negative? ? (value > other.value) : true
-    else
-      other.negative? ? false : (value < other.value)
-    end
+    LessThan.call(self, other)
   end
 
   def >(other)
