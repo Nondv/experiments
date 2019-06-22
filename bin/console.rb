@@ -1,5 +1,5 @@
 require 'irb'
 require 'irb/completion'
-require_relative '../lib/natural_number'
+require_relative '../lib/integer_number'
 
 IRB.start
