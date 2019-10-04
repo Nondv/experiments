@@ -1,4 +1,4 @@
-require 'integer_number'
+require 'numbers/integer_number'
 
 RSpec.describe IntegerNumber do
   let(:one) { IntegerNumber::ONE }

@@ -1,4 +1,4 @@
-require 'natural_number'
+require 'numbers/natural_number'
 
 RSpec.describe NaturalNumber do
   let(:one) { NaturalNumber::ONE }
