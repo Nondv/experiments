@@ -11,6 +11,10 @@ class AbstractOperation
     new.curry(*args)
   end
 
+  def self.comp(f)
+    new.comp(f)
+  end
+
   def initialize(*args_to_curry)
     @curried_args = args_to_curry
   end
@@ -27,6 +31,15 @@ class AbstractOperation
 
   def to_proc
     proc { |*args| call(*args) }
+  end
+
+  def comp(f)
+    closure = self
+    Class.new(AbstractOperation) do
+      define_method(:implementation) do |*args|
+        closure.call(f.call(*args))
+      end
+    end
   end
 
   def implementation(*)

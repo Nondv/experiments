@@ -61,4 +61,37 @@ RSpec.describe AbstractOperation do
       instance.to_proc.call(3)
     end
   end
+
+  describe 'composition' do
+    it 'composes callable objects as comp(f(x), g(x)) = f(g(x))' do
+      f = described_class.new
+      g = described_class.new
+
+      expect(g).to receive(:implementation).with(:x).and_return(:g_x)
+      expect(f).to receive(:implementation).with(:g_x)
+
+      f.comp(g).call(:x)
+    end
+
+    it 'can compose multiple time' do
+      f = described_class.new
+      g = described_class.new
+      h = described_class.new
+
+      expect(h).to receive(:implementation).with(:x).and_return(:h)
+      expect(g).to receive(:implementation).with(:h).and_return(:g)
+      expect(f).to receive(:implementation).with(:g)
+
+      f.comp(g).comp(h).call(:x)
+    end
+
+    it 'works on class-level' do
+      sqr = ->(x) { x * x }
+      expect_any_instance_of(described_class).to(
+        receive(:implementation)
+          .with(9)
+      )
+      described_class.comp(sqr).call(3)
+    end
+  end
 end
