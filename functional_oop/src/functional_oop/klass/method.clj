@@ -12,6 +12,3 @@
 
 (defn execute [method self state msg]
   (apply method self state (:args msg)))
-
-(defn args-from-message [msg]
-  (:args msg))
