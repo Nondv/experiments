@@ -1,10 +1,13 @@
 (ns functional-oop.core
   (:gen-class)
-  (:require #_[functional-oop.klass :as klass]
-            [clojure.core.async :as async]))
+  (:require [functional-oop.klass :as klass]
+            [functional-oop.klass.method :as method]
+            [functional-oop.cli :refer [cli-klass]]))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!"))
-
+  (let [terminated? (promise)
+        cli (klass/new-instance cli-klass terminated?)]
+    (method/call-on-object cli :start)
+    @terminated?))
